@@ -1,448 +1,170 @@
-# REMOTE SENTINEL v9.0 - GUIA DEFINITIVO
+Everything here is just an example of how to use it.
+__________________________________________________________________
 
-## REQUISITOS OBRIGATORIOS
+REMOTE SENTINEL v9.0 - DEFINITIVE GUIDE
 
-**EXECUTOR NECESSARIO:**
-- UNC (Unified Naming Convention) minimo: 87%
-- Recomendados: Ronix, Synapse X, Script-Ware, Solara, Wave
-- Funcoes essenciais: hookfunction, getgc, loadstring, HttpService
+__________________________________________________________________
 
-**IMPORTANTE:** Este e um script educacional para teste de penetracao em ambientes controlados.
+MANDATORY REQUIREMENTS
 
----
+REQUIRED EXECUTOR:
+- UNC (Unified Naming Convention) minimum: 87%
+- Recommended: Ronix, Synapse X, Script-Ware, Solara, Wave
+- Essential functions: hookfunction, getgc, loadstring, HttpService
 
-## INSTALACAO
+IMPORTANT: This is an educational script for penetration testing in controlled environments.
 
-### Comando de Carregamento:
-```lua
+__________________________________________________________________
+
+INSTALLATION
+
+Load Command:
 loadstring(game:HttpGet("https://raw.githubusercontent.com/BRUHHHHHHHHHHHHHHHHHHHHAA/Remote_Sentinel-v9-Totally-open-source/refs/heads/main/The%20script%20!"))()
-```
-
-### Verificacao Pos-Instalacao:
-- Interface com 6 abas deve aparecer
-- Titulo: "Remote Sentinel v9.0 (FDS - Melhorado)"
-- Botao X para fechar no canto superior direito
-- Status bar na parte inferior
-
----
-
-## GUIA COMPLETO DAS ABAS
-
-### ABA 1: MAIN (PRINCIPAL)
-
-**PAINEL ESQUERDO:**
-
-**Scan All Remotes**
-- Varre todo o jogo procurando RemoteEvents e RemoteFunctions
-- Mostra lista completa de todos os remotes encontrados
-- Usa letras para identificar tipo: RE (RemoteEvent), RF (RemoteFunction)
 
-**Filtro**
-- Campo de texto para buscar remotes especificos
-- Digite nome ou caminho parcial
-- Lista atualiza automaticamente
+Post-Installation Verification:
+- A 6-tab interface should appear
+- Title: "Remote Sentinel v9.0 (FDS - Improved)"
+- X button to close in the top right corner
+- Status bar at the bottom
+
+__________________________________________________________________
 
-**Lista de Remotes**
-- Clique em qualquer remote para selecionar
-- Remote selecionado fica roxo
-- Botao "S" ao lado ativa/desativa spy
-- Quando spy ativo, botao fica azul
+COMPLETE TAB GUIDE
 
-**PAINEL DIREITO:**
-
-**Details Panel**
-- Mostra informacoes do remote selecionado
-- Nome, classe, caminho completo, parent
-- Status do hook (se spy esta ativo)
-
-**Log Area**
-- Mostra todas as atividades em tempo real
-- Cores diferentes para tipos de mensagem
-- Botao "Clear" para limpar logs
-- Auto-scroll para mensagens novas
-
-**STATUS BAR (INFERIOR):**
-- Mostra estado atual do sistema
-- Numero de remotes encontrados
-- Status das operacoes em andamento
-
----
-
-### ABA 2: FUZZER
-
-**COLUNA ESQUERDA:**
-
-**Fuzzing Profile (Dropdown)**
-- **Basic**: Testes simples (numeros, strings, booleans)
-- **Injecao de Comando**: Comandos admin (:kill, :kick, :ban, etc.)
-- **Manipulacao de Stats**: Tenta modificar Cash, Money, Points
-- **Destrutivo / Crash**: Payloads que podem crashar (CUIDADO!)
-- **Incompatibilidade de Tipos**: Mistura tipos incorretos
-- **Exploracao de Metatables**: Tenta vazar informacoes via __index
-- **Abuso de Memoria**: Sobrecarrega memoria (CUIDADO!)
-- **Custom**: Use seu proprio codigo Lua
-
-**Toggles**
-- **Heuristics**: Analisa respostas automaticamente
-  - OFF (laranja) / ON (verde)
-  - Detecta padroes de sucesso em respostas
-- **Adaptive**: Gera novos payloads baseado em sucessos
-  - Funciona apenas com Heuristics ON
-  - Explora vulnerabilidades mais profundamente
-
-**Custom Fuzz Input**
-- Area de codigo para payloads personalizados
-- Deve retornar tabela de argumentos
-- Exemplo: `return { {"kick", "all"} }`
-
-**Botoes**
-- **Fuzz Selected Remote**: Inicia fuzzing no remote selecionado
-- **Network Stress Test**: Bombardeia remote com requisicoes rapidas
-
-**COLUNA DIREITA:**
-
-**Manual Payload Executor**
-- Area de codigo para testes manuais
-- Escreva Lua que retorna argumentos
-- Exemplo: `return {"setstat", "Cash", 999999}`
-- **Execute Payload**: Roda o codigo no remote selecionado
-
----
-
-### ABA 3: SCANNERS
-
-**COLUNA ESQUERDA:**
-
-**Vulnerability Scanners**
-- **Scan for Common Backdoors**: Procura require(), loadstring(), getfenv()
-- **Static Analysis**: Analisa LocalScripts por FireServer calls
-- **Scan for Common Admin Systems**: Detecta HDAdmin, Adonis, etc.
-- **Scan for Insecure Remote Patterns**: Remotes em locais estranhos
-- **Scan for Anti-Cheat Patterns**: Detecta scripts de protecao
-
-**Memory & Injection**
-- **Scan Memory for References**: Usa getgc() para achar referencias
-- **Insecure require Exploiter**: 
-  - Insira Asset ID numerico
-  - Tenta injetar via require(ASSET_ID)
-
-**COLUNA DIREITA:**
-
-**Scan Results / Source Viewer**
-- Mostra resultados de todos os scans
-- Clique nos resultados para ver codigo fonte
-- Syntax highlighting automatico
-- Scroll para navegar em codigos longos
-
----
-
-### ABA 4: NETWORK
-
-**HTTP Requester para backdoors externos**
-
-**COLUNA ESQUERDA:**
-- **URL**: Endereco de destino (https://exemplo.com)
-- **Method**: GET, POST, PUT, DELETE, PATCH, HEAD
-- **Send HTTP Request**: Executa a requisicao
-
-**COLUNA DIREITA:**
-- **Headers (JSON)**: Cabecalhos da requisicao
-  ```json
-  {
-    "Authorization": "Bearer TOKEN",
-    "Content-Type": "application/json"
-  }
-  ```
-- **Body**: Conteudo da requisicao (para POST/PUT)
-  ```json
-  {"message": "test", "data": "value"}
-  ```
-
-**Uso Comum:**
-- Testar webhooks Discord
-- Verificar APIs externas
-- Confirmar conexoes de backdoors
-
----
-
-### ABA 5: RECORDER
-
-**Call Recorder & Replayer**
-
-**Controles Superiores:**
-- **Start/Stop Recording**: Grava chamadas do remote selecionado
-  - Precisa ter spy ativo no remote
-  - Botao muda para "Stop Recording" quando ativo
-- **Replay All**: Reproduz todas as chamadas gravadas
-- **Clear**: Limpa todas as gravacoes
-
-**Area Principal:**
-- Lista de todas as chamadas gravadas
-- Formato: [numero] argumentos_serializados
-- Scroll automatico para novas gravacoes
-
-**Fluxo de Uso:**
-1. Selecione remote na aba Main
-2. Ative spy (botao S)
-3. Volte para Recorder e clique "Start Recording"
-4. Jogue normalmente
-5. Pare gravacao e use "Replay All" para repetir
-
----
-
-### ABA 6: ADVANCED
-
-**Advanced Analysis Tools (Experimental)**
-
-**Analyze Logic of Last Successful Fuzz**
-- Analisa detalhadamente o ultimo fuzz bem-sucedido
-- Testa diferentes quantidades de argumentos
-- Verifica sensibilidade a tipos de dados
-- Mostra vulnerabilidades especificas encontradas
-
-**Requisitos:**
-- Fuzzing com Heuristics deve ter encontrado vulnerabilidade
-- Remote deve ser do tipo Function (para receber respostas)
-
-**Resultados Mostrados:**
-- Teste com menos argumentos
-- Teste com mais argumentos  
-- Teste mudando tipos de argumentos
-- Analise de sensibilidade da logica
-
----
-
-## FLUXOS DE TRABALHO
-
-### INICIANTE - PRIMEIRO USO
-
-**Passo 1: Reconhecimento**
-```
-1. Execute script
-2. Clique "Scan All Remotes"
-3. Va para aba Scanners
-4. Execute "Scan for Common Admin Systems"
-5. Execute "Scan for Common Backdoors"
-```
-
-**Passo 2: Teste Basico**
-```
-1. Volte para Main
-2. Selecione remote interessante da lista
-3. Clique botao "S" para ativar spy
-4. Va para Fuzzer
-5. Escolha profile "Basic"
-6. Clique "Fuzz Selected Remote"
-```
-
-### INTERMEDIARIO - ANALISE FOCADA
-
-**Fuzzingg com Heuristica:**
-```
-1. Na aba Fuzzer, ative "Heuristics: ON"
-2. Escolha profile "Injecao de Comando"
-3. Execute fuzzing
-4. Se encontrar vulnerabilidade, va para Advanced
-5. Execute "Analyze Logic"
-```
-
-**Gravacao e Replay:**
-```
-1. Selecione remote suspeito
-2. Ative spy
-3. Va para Recorder
-4. Inicie gravacao
-5. Jogue e interaja normalmente
-6. Pare gravacao e analise chamadas
-7. Use "Replay All" para repetir comportamentos
-```
-
-### AVANCADO - ANALISE PROFUNDA
-
-**Scan Completo:**
-```
-1. Execute todos os scanners
-2. Use Memory Scan em remotes importantes
-3. Analise codigo fonte encontrado
-4. Teste require injection com Asset IDs suspeitos
-```
-
-**Fuzzing Avancado:**
-```
-1. Ative Heuristics E Adaptive
-2. Use profiles destrutivos com MUITO cuidado
-3. Desenvolva payloads customizados
-4. Teste stress test em remotes criticos
-```
-
----
-
-## INTERPRETACAO DE RESULTADOS
-
-### CORES DOS LOGS:
-- **AZUL** [INFO]: Informacoes gerais
-- **VERDE** [OK]: Operacao bem-sucedida
-- **LARANJA** [WARN]: Aviso importante  
-- **VERMELHO** [ERRO]: Erro de execucao
-- **CIANO** [SPY]: Chamada interceptada
-- **VERMELHO FORTE** [VULN]: Vulnerabilidade encontrada!
-- **AMARELO** [ADAPT]: Fuzzing adaptativo ativo
-
-### SINAIS DE VULNERABILIDADE:
-
-**Respostas Positivas:**
-- Textos: "success", "granted", "admin", "killed", "done"
-- Booleanos: true (em contexto suspeito)
-- Mudancas visiveis no jogo apos fuzzing
-
-**Erros Reveladores:**
-- Stack traces que mostram codigo do servidor
-- Mensagens detalhadas sobre estrutura interna
-- Crashes ou kicks apos certos payloads
-
----
-
-## PAYLOADS CUSTOMIZADOS - EXEMPLOS
-
-### Admin Commands:
-```lua
--- Tentar kill em todos
-return {":kill", "all"}
-
--- Kick especifico
-return {"kick", game.Players.LocalPlayer.Name}
-
--- Admin para si mesmo
-return {":admin", "me"}
-```
-
-### Stats Manipulation:
-```lua
--- Cash infinito
-return {"setstat", "Cash", math.huge}
-
--- Manipular leaderstats
-return {"setleaderstat", game.Players.LocalPlayer.Name, "Money", 999999}
-
--- Tentar rebirth
-return {"rebirth", 1000}
-```
-
-### Teleport/Movement:
-```lua
--- Teleport para spawn
-return {"tp", "me", "spawn"}
-
--- Bring player
-return {"bring", game.Players.LocalPlayer.Name}
-
--- Speed hack via remote
-return {"speed", game.Players.LocalPlayer.Name, 100}
-```
-
----
-
-## DICAS DE SEGURANCA
-
-### EVITAR DETECCAO:
-1. **Nao abuse**: Pause entre testes longos
-2. **Comece basico**: Use profile "Basic" primeiro
-3. **Monitor logs**: Pare se ver anti-cheat ativo
-4. **Use delays**: Aumente tempo entre payloads se necessario
-
-### EVITAR CRASHES:
-1. **CUIDADO com profiles destrutivos**: Podem derrubar servidor
-2. **Teste localmente primeiro**: Crie jogo proprio para praticar
-3. **Salve progresso**: Anti-cheat pode kickar/banir
-
-### BOAS PRATICAS:
-1. **Sempre teste em ambiente controlado primeiro**
-2. **Respeite ToS do Roblox**
-3. **Use apenas para educacao/pesquisa**
-4. **Nunca prejudique outros jogadores**
-
----
-
-## TROUBLESHOOTING
-
-### ERROS COMUNS:
-
-**"hookfunction nao disponivel"**
-- Seu executor tem UNC muito baixo
-- Spy e Recording nao funcionarao
-- Solucao: Upgrade para executor melhor
-
-**"getgc nao disponivel"**  
-- Memory Scan nao funcionara
-- Solucao: Use outros metodos de analise
-
-**"HttpService nao habilitado"**
-- Network tab nao funcionara
-- Alguns jogos desabilitam HTTP
-- Nada pode ser feito
-
-**Interface lenta/travando**
-- Muitos logs acumulados
-- Solucao: Use botao "Clear" regularmente
-
----
-
-## CASOS DE USO REAIS
-
-### ENCONTRAR ADMIN REMOTES:
-1. Scan admin systems primeiro
-2. Se encontrar HDAdmin/Adonis, foque nos remotes deles
-3. Use profile "Injecao de Comando"
-4. Teste com nomes de jogadores reais
-
-### MANIPULAR ECONOMIA:
-1. Procure remotes com nomes: "buy", "sell", "purchase", "shop"
-2. Use profile "Manipulacao de Stats"  
-3. Teste valores negativos tambem
-4. Monitor leaderstats para mudancas
-
-### DETECTAR BACKDOORS:
-1. Execute "Scan for Common Backdoors"
-2. Clique nos resultados para ver codigo
-3. Procure por Asset IDs suspeitos
-4. Teste require injection com IDs encontrados
-
----
-
-## SUPORTE E CONTATO
-
-**Para duvidas, problemas ou sugestoes:**
-- **Discord**: Entre em contato comigo
-- **Issues**: Use o GitHub do projeto
-- **Updates**: Acompanhe o repositorio
-
-**Recursos Adicionais:**
-- Documentacao do executor usado
-- Comunidades de Roblox scripting
-- Tutoriais de Lua scripting
-
----
-
-## CHANGELOG v9.0
-
-**Novos Recursos:**
-- Interface completamente reformulada
-- Sistema de fuzzing adaptativo
-- Analise heuristica automatica
-- Recorder com replay
-- HTTP requester integrado
-- Syntax highlighting
-- Memory scanning avancado
-
-**Melhorias:**
-- Performance otimizada
-- Menos crashes
-- Interface mais intuitiva
-- Logs mais organizados
-- Suporte para mais executores
-
----
-
-*Remote Sentinel v9.0 - Ferramenta educacional para analise de seguranca*
-*Requires UNC 87%+ executor - Use responsibly*
-*Any questions? Hit me up on Discord!*
+TAB 1: MAIN
+
+LEFT PANEL:
+
+Scan All Remotes
+- Scans the entire game for RemoteEvents and RemoteFunctions
+- Shows a list Complete list of all remotes found
+- Uses letters to identify type: RE (RemoteEvent), RF (RemoteFunction)
+
+Filter
+- Text field to search for specific remotes
+- Enter name or partial path
+- List updates automatically
+
+Remote List
+- Click any remote to select
+- Selected remote turns purple
+- "S" button next to it enables/disables spy
+- When spy is active, the button turns blue
+
+RIGHT PANEL:
+
+Details Panel
+- Shows information about the selected remote
+- Name, class, full path, parent
+- Hook status (if spy is active)
+
+Log Area
+- Shows all activity in real time
+- Different colors for message types
+- "Clear" button to clear logs
+- Auto-scroll for new messages
+
+STATUS BAR (BOTTOM):
+- Shows current system status
+- Number of remotes found
+- Status of ongoing operations
+
+__________________________________________________________________
+
+TAB 2: FUZZER
+
+LEFT COLUMN:
+
+Fuzzing Profile (Dropdown)
+- Basic: Simple tests (numbers, strings, booleans)
+- Command Injection: Admin commands (:kill, :kick, :ban, etc.)
+- Stat Manipulation: Attempts to modify Cash, Money, Points
+- Destructive / Crash: Payloads that may crash (CAUTION!)
+- Type Mismatch: Mixes incorrect types
+- Metatable Exploitation: Attempts to leak information via __index
+- Memory Abuse: Overloads memory (CAUTION!)
+- Custom: Use your own Lua code
+
+Toggles
+- Heuristics: Automatically analyzes responses
+- OFF (orange) / ON (green)
+- Detects success patterns in responses
+- Adaptive: Generates new payloads based on successes
+- Works only with Heuristics ON - Explore vulnerabilities more deeply
+
+Custom Fuzz Input
+- Code area for custom payloads
+- Must return a table of arguments
+- Example: return { {"kick", "all"} }
+
+Buttons
+- Fuzz Selected Remote: Starts fuzzing on the selected remote
+- Network Stress Test: Bombards the remote with rapid requests
+
+RIGHT COLUMN:
+
+Manual Payload Executor
+- Code area for manual testing
+- Write Lua that returns arguments
+- Example: return {"setstat", "Cash", 999999}
+- Execute Payload: Runs the code on the selected remote
+
+__________________________________________________________________
+
+TAB 3: SCANNERS
+
+LEFT COLUMN:
+
+Vulnerability Scanners
+- Scan for Common Backdoors: Looks for require(), loadstring(), getfenv()
+- Static Analysis: Analyzes LocalScripts via FireServer calls
+- Scan for Common Admin Systems: Detects HDAdmin, Adonis, etc. - Scan for Insecure Remote Patterns: Remotes in strange locations
+- Scan for Anti-Cheat Patterns: Detects protection scripts
+
+Memory & Injection
+- Scan Memory for References: Uses getgc() to find references
+- Insecure require Exploiter:
+- Enter a numeric Asset ID
+- Attempts injection via require(ASSET_ID)
+
+RIGHT COLUMN:
+
+Scan Results / Source Viewer
+- Shows results of all scans
+- Click on the results to view the source code
+- Automatic syntax highlighting
+- Scroll to navigate long code
+
+__________________________________________________________________
+
+TAB 4: NETWORK
+
+HTTP Requester for external backdoors
+
+LEFT COLUMN:
+- URL: Target address (https://example.com)
+- Method: GET, POST, PUT, DELETE, PATCH, HEAD
+- Send HTTP Request: Executes the request
+
+RIGHT COLUMN:
+- Headers (JSON): Request headers
+{
+"Authorization": "Bearer TOKEN",
+"Content-Type": "application/json"
+}
+- Body: Request content (for POST/PUT)
+{"message": "test", "data": "value"}
+
+Common Use:
+- Test Discord webhooks
+- Check external APIs
+- Confirm backdoor connections
+
+__________________________________________________________________
+
+TAB 5: RECORDER
+
+Call Recorder & Replayer
+
+Top Controls:
+- Start/Stop Recording:
