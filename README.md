@@ -1,4 +1,5 @@
 📩 Contact: Discord: refref012344 Roblox: https://www.roblox.com/users/3620648614/profile
+->> script -->> loadstring(game:HttpGet("https://raw.githubusercontent.com/BRUHHHHHHHHHHHHHHHHHHHHAA/Remote_Sentinel-v9-Totally-open-source/refs/heads/main/The%20script%20!"))()
 
 # Remote-Sentinel-v9.1-Totaly-open-source-
 🚨 Advanced tool for monitoring, fuzzing, and injecting RemoteEvents/Functions in Roblox.
