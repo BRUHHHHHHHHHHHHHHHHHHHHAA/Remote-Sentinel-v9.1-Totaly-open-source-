@@ -10,7 +10,7 @@
 
 # 🛰️ Remote Sentinel
 
-**Remote Sentinel v9.0 - Improved FDS** is one of the most advanced RemoteEvent/Function inspection, fuzzing, and injection tools ever created for Roblox. Designed with offensive security and deep analysis in mind, it offers a modern graphical interface, heuristic analysis, adaptive fuzzing, and multiple scanners for real-world vulnerabilities.
+**Remote Sentinel v9.1 - Improved FDS** is one of the most advanced RemoteEvent/Function inspection, fuzzing, and injection tools ever created for Roblox. Designed with offensive security and deep analysis in mind, it offers a modern graphical interface, heuristic analysis, adaptive fuzzing, and multiple scanners for real-world vulnerabilities.
 
 ---
 
