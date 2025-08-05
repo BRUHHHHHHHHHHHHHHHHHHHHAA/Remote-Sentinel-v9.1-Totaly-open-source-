@@ -40,7 +40,7 @@ local TweenService = game:GetService("TweenService")
 local LocalPlayer = Players.LocalPlayer
 
 local Config = {
-    AppName = "Remote Sentinel v10.0 (FDS - Melhorado com Decompiler)",
+    AppName = "Remote Sentinel v9.1 (FDS - add Decompiler)",
     FuzzingDelay = 0.01,
     ScanThrottle = 0.001,
     SerializerMaxDepth = 10,
