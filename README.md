@@ -1,73 +1,71 @@
 # Remote-Sentinel-v9.1-Totaly-open-source-
-🚨 Advanced tool for monitoring, fuzzing, and injecting RemoteEvents/Functions in Roblox. 
+🚨 Advanced tool for monitoring, fuzzing, and injecting RemoteEvents/Functions in Roblox.
 🧠 Requires Ronix executor (UNC 87–100%). Complete interface and real vulnerability analysis.
-🛰️ Remote Sentinel — Ferramenta avançada de monitoramento, fuzzing e injeção de RemoteEvents/RemoteFunctions no Roblox.
-🧠 Compatível apenas com executor Ronix (87%–100% UNC). GUI completa + análise de vulnerabilidades reais.
+🛰️ Remote Sentinel — Advanced tool for monitoring, fuzzing, and injecting RemoteEvents/RemoteFunctions in Roblox.
+🧠 Only compatible with Ronix executor (UNC 87–100%). Complete GUI + real vulnerability analysis.
 📩 My Discord: refref012344 | Roblox: Ed_osu
 
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-
 # 🛰️ Remote Sentinel
 
-**Remote Sentinel v9.0 - FDS Melhorado** é uma das ferramentas mais avançadas de inspeção, fuzzing e injeção de RemoteEvents/Functions já criadas para Roblox. Projetada com foco em segurança ofensiva e análise profunda, ela oferece interface gráfica moderna, análise heurística, fuzzing adaptativo e múltiplos scanners para vulnerabilidades reais.
+**Remote Sentinel v9.0 - Improved FDS** is one of the most advanced RemoteEvent/Function inspection, fuzzing, and injection tools ever created for Roblox. Designed with offensive security and deep analysis in mind, it offers a modern graphical interface, heuristic analysis, adaptive fuzzing, and multiple scanners for real-world vulnerabilities.
 
 ---
 
-## ⚙️ Requisitos
+## ⚙️ Requirements
 
-- 🔧 Executor **necessário**: compatibilidade de **87% a 100% UNC**
-- ✅ **Testado e validado APENAS com [Ronix](https://ronix.wtf/)**
-- Recursos obrigatórios:
-  - `getconnections`, `hookfunction`, `debug.getupvalue`, `getnilinstances`
-  - Suporte completo a `CoreGui`, `setclipboard`, `loadstring`, `HttpService.RequestAsync`
-
----
-
-## 🧠 Principais Funcionalidades
-
-- 🔍 **Scan Profundo**: detecta todos os `RemoteEvents`, `RemoteFunctions`, `BindableEvents` e `BindableFunctions`, inclusive ocultos e em serviços incomuns
-- 🎛️ **Interface GUI moderna**: janela central com tabs, filtros, histórico, status e tema customizado
-- ⚠️ **Detector de Vulnerabilidades**:
-  - Scanners de backdoors, padrões inseguros, anti-cheats, requires externos e permissões abertas
-  - Análise estática de scripts do cliente (compreensão de lógica perigosa)
-- 💥 **Fuzzing Avançado**:
-  - Perfis prontos: comandos destrutivos, manipulação de stats, exploits com metatable, memória, crashes, etc
-  - Suporte a fuzzing heurístico e adaptativo
-  - Fuzz customizável com código direto (`loadstring`)
-- 🧪 **Payload Injector**: sistema de execução de comandos com retorno de função (`InvokeServer`) visível, análise de resposta e alerta
-- 📡 **HTTP Request Sender**: útil para testar exploits em backdoors externos (como WebPanel, Adonis HTTP, etc)
-- 🧾 **Recorder & Replay**: grava todas as chamadas disparadas e permite reexecutar automaticamente
-- 📈 **Analyzer**: interpretação de lógica com base nas respostas retornadas de fuzzing (`success`, `kicked`, `admin`, etc)
+- 🔧 **Required** Executor: **87% to 100% UNC** compatibility
+- ✅ **Tested and validated ONLY with [Ronix](https://ronix.wtf/)**
+- Required features:
+- `getconnections`, `hookfunction`, `debug.getupvalue`, `getnilinstances`
+- Full support for `CoreGui`, `setclipboard`, `loadstring`, `HttpService.RequestAsync`
 
 ---
 
-## 🧪 Ideal para:
+## 🧠 Main Features
 
-- Desenvolvedores que desejam testar seus jogos contra abuso remoto
-- Exploração ética e auditoria interna (white-hat)
-- Testes de fuzzing com feedback em tempo real
-- Engenharia reversa de scripts remotos (por meio de `Spy`, `Analyzer`, `Recorder`)
-
----
-
-## ⚠️ AVISO IMPORTANTE
-
-> Esta ferramenta foi criada **exclusivamente** para fins educacionais e de auditoria em jogos próprios.  
-> O uso indevido contra jogos de terceiros sem permissão pode violar os **Termos de Uso do Roblox**.  
-> O autor **não se responsabiliza** por danos ou banimentos causados por uso fora do permitido.
-
----
-
-## 📂 Atualizações e Contribuições
-
-Este projeto ainda está em fase ativa de desenvolvimento.  
-Sinta-se livre para abrir uma **Issue**, **Pull Request** ou sugerir novos fuzzers e scanners!
+- 🔍 **Deep Scan**: Detects all `RemoteEvents`, `RemoteFunctions`, `BindableEvents`, and `BindableFunctions`, including hidden ones and those in unusual services
+- 🎛️ **Modern GUI interface**: central window with tabs, filters, history, status, and custom theme
+- ⚠️ **Vulnerability Detector**:
+- Scanners for backdoors, insecure patterns, anti-cheats, external requires, and open permissions
+- Static analysis of client-side scripts (understanding dangerous logic)
+- 💥 **Advanced Fuzzing**:
+- Ready-made profiles: destructive commands, stat manipulation, exploits with metatables, memory, crashes, etc.
+- Support for heuristic and adaptive fuzzing
+- Customizable fuzz with direct code (`loadstring`)
+- 🧪 **Payload Injector**: command execution system with visible function return (`InvokeServer`), response analysis, and alerts
+- 📡 **HTTP Request Sender**: useful for testing exploits in external backdoors (such as WebPanel, Adonis HTTP, etc.)
+- 🧾 **Recorder & Replay**: records all calls fired and allows automatic replay.
+- 📈 **Analyzer**: interprets logic based on the responses returned from fuzzing (`success`, `kicked`, `admin`, etc.)
 
 ---
 
-✉️ Criado com dedicação por um programador brasileiro apaixonado por segurança em Roblox.
+## 🧪 Ideal for:
 
+- Developers who want to test their games against remote abuse
+- Ethical exploitation and internal auditing (white-hat)
+- Fuzzing testing with real-time feedback
+- Reverse engineering of remote scripts (using `Spy`, `Analyzer`, `Recorder`)
+
+---
+
+## ⚠️ IMPORTANT NOTICE
+
+> This tool was created **exclusively** for educational and auditing purposes in proprietary games.
+> Improper use against third-party games without permission may violate the **Roblox Terms of Use**.
+> The author **is not responsible** for damages or bans caused by unauthorized use.
+
+---
+
+## 📂 Updates and Contributions
+
+This project is still in an active development phase.
+Feel free to open an Issue, Pull Request, or suggest new fuzzers and scanners!
+
+---
+
+✉️ Created with dedication by a Brazilian programmer passionate about Roblox security.
 
 
