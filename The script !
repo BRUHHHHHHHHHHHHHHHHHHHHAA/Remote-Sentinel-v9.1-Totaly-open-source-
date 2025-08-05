@@ -1,4 +1,3 @@
-
 local SentinelWorkspace = getgenv() or {}
 if type(SentinelWorkspace) ~= "table" then SentinelWorkspace = {} end
 getgenv().SentinelWorkspace = SentinelWorkspace
@@ -46,10 +45,10 @@ local Config = {
     SerializerMaxDepth = 10,
     MaxLogEntries = 300,
     Colors = {
-        Background = Color3.fromRGB(40, 40, 50),
-        Primary = Color3.fromRGB(25, 25, 33),
-        Secondary = Color3.fromRGB(35, 35, 45),
-        Accent = Color3.fromRGB(120, 100, 220),
+        Background = Color3.fromRGB(30, 30, 40),
+        Primary = Color3.fromRGB(20, 20, 28),
+        Secondary = Color3.fromRGB(45, 45, 55),
+        Accent = Color3.fromRGB(110, 90, 230),
         TabActive = Color3.fromRGB(85, 65, 165),
         Text = Color3.fromRGB(245, 245, 245),
         TextSecondary = Color3.fromRGB(200, 200, 220),
@@ -88,7 +87,7 @@ function Dropdown.new(parent, name)
         ZIndex = 2,
         Parent = parent
     })
-    create("UICorner", {Parent = self.MainFrame})
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.MainFrame})
 
     self.SelectedLabel = create("TextLabel", {
         Name = "SelectedLabel",
@@ -126,7 +125,7 @@ function Dropdown.new(parent, name)
         ZIndex = 3,
         Parent = self.MainFrame
     })
-    create("UICorner", {Parent = self.ItemsFrame})
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.ItemsFrame})
     create("UIListLayout", {
         SortOrder = Enum.SortOrder.LayoutOrder,
         Padding = UDim.new(0, 2),
@@ -296,7 +295,7 @@ function RemoteSentinel.GUI:Create()
         ClipsDescendants = true,
         Parent = screenGui
     })
-    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = mainFrame })
+    create("UICorner", { CornerRadius = UDim.new(0, 16), Parent = mainFrame })
     self.MainFrame = mainFrame
 
     local titleBar = create("Frame", {
@@ -362,7 +361,14 @@ function RemoteSentinel.GUI:Create()
         ClipsDescendants = true,
         Parent = mainFrame
     })
-    create("UICorner", { CornerRadius = UDim.new(0, 6), Parent = contentFrame })
+    create("UICorner", { CornerRadius = UDim.new(0, 12), Parent = contentFrame })
+    create("UIPadding", {
+        PaddingTop = UDim.new(0, 10),
+        PaddingBottom = UDim.new(0, 10),
+        PaddingLeft = UDim.new(0, 10),
+        PaddingRight = UDim.new(0, 10),
+        Parent = contentFrame
+    })
     self.ContentFrame = contentFrame
 
     local statusBar = create("Frame", {
@@ -407,7 +413,7 @@ function RemoteSentinel.GUI:CreateTab(name)
         Size = UDim2.new(0, 120, 1, 0),
         Parent = self.TabFrame
     })
-    create("UICorner", { CornerRadius = UDim.new(0, 6), Parent = tabButton })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = tabButton })
 
     local tabContent = create("Frame", {
         Name = name .. "Content",
@@ -475,7 +481,7 @@ function RemoteSentinel.GUI:SetupMainTab(tab)
         ClearTextOnFocus = false,
         Parent = listColumn
     })
-    create("UICorner", { Parent = self.FilterInput })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.FilterInput })
 
     self.RemoteListFrame = create("ScrollingFrame", {
         Name = "RemoteListFrame",
@@ -518,7 +524,7 @@ function RemoteSentinel.GUI:SetupMainTab(tab)
         TextSize = 14,
         Parent = listActionsFrame
     })
-    create("UICorner", { Parent = self.RefreshButton })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.RefreshButton })
 
     local rightColumn = create("Frame", {
         Name = "RightColumn",
@@ -535,7 +541,7 @@ function RemoteSentinel.GUI:SetupMainTab(tab)
         BackgroundColor3 = Config.Colors.Background,
         Parent = rightColumn
     })
-    create("UICorner", { Parent = self.DetailFrame })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.DetailFrame })
     create("UIPadding", {
         PaddingTop = UDim.new(0, 5),
         PaddingLeft = UDim.new(0, 5),
@@ -568,7 +574,7 @@ function RemoteSentinel.GUI:SetupMainTab(tab)
         CanvasSize = UDim2.new(0, 0, 0, 0),
         Parent = rightColumn
     })
-    create("UICorner", { Parent = self.LogFrame })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.LogFrame })
     self.LogLayout = create("UIListLayout", {
         Name = "LogLayout",
         Padding = UDim.new(0, 3),
@@ -594,7 +600,7 @@ function RemoteSentinel.GUI:SetupMainTab(tab)
             if v:IsA("TextLabel") then v:Destroy() end
         end
     end)
-    create("UICorner", { Parent = clearLogButton })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = clearLogButton })
 end
 
 function RemoteSentinel.GUI:SetupBackdoorTab(tab)
@@ -636,7 +642,7 @@ function RemoteSentinel.GUI:SetupBackdoorTab(tab)
         TextColor3 = Color3.new(1, 1, 1),
         Parent = leftColumn
     })
-    create("UICorner", { Parent = self.BackdoorScanButton })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.BackdoorScanButton })
 
     self.BackdoorDebugToggle = create("TextButton", {
         Name = "BackdoorDebugToggle",
@@ -648,7 +654,7 @@ function RemoteSentinel.GUI:SetupBackdoorTab(tab)
         TextColor3 = Config.Colors.Warning,
         Parent = leftColumn
     })
-    create("UICorner", { Parent = self.BackdoorDebugToggle })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.BackdoorDebugToggle })
 
     self.BackdoorStatusLabel = create("TextLabel", {
         Name = "BackdoorStatusLabel",
@@ -683,7 +689,7 @@ function RemoteSentinel.GUI:SetupBackdoorTab(tab)
         BorderColor3 = Config.Colors.Secondary,
         Parent = leftColumn
     })
-    create("UICorner", { Parent = self.BackdoorResultsList })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.BackdoorResultsList })
     self.BackdoorResultsLayout = create("UIListLayout", {
         Padding = UDim.new(0, 3),
         SortOrder = Enum.SortOrder.LayoutOrder,
@@ -718,7 +724,7 @@ function RemoteSentinel.GUI:SetupBackdoorTab(tab)
         PlaceholderText = "Enter Lua code to execute on the server...",
         Parent = rightColumn
     })
-    create("UICorner", { Parent = self.BackdoorEditor })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.BackdoorEditor })
 
     self.BackdoorExecuteButton = create("TextButton", {
         Name = "BackdoorExecuteButton",
@@ -731,7 +737,7 @@ function RemoteSentinel.GUI:SetupBackdoorTab(tab)
         TextColor3 = Color3.new(1, 1, 1),
         Parent = rightColumn
     })
-    create("UICorner", { Parent = self.BackdoorExecuteButton })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.BackdoorExecuteButton })
 end
 
 function RemoteSentinel.GUI:SetupFuzzerTab(tab)
@@ -811,8 +817,8 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
         Parent = togglesFrame
     })
 
-    create("UICorner", {Parent = self.HeuristicToggle})
-    create("UICorner", {Parent = self.AdaptiveToggle})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.HeuristicToggle})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.AdaptiveToggle})
 
     self.CustomFuzzInput = create("TextBox", {
         Name = "CustomFuzzInput",
@@ -830,7 +836,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
         PlaceholderText = "Enter Lua code for custom payloads here...",
         Parent = leftColumn
     })
-    create("UICorner", { Parent = self.CustomFuzzInput })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.CustomFuzzInput })
 
     self.FuzzSelectedButton = create("TextButton", {
         Name = "FuzzSelectedButton",
@@ -843,7 +849,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
         TextColor3 = Color3.new(1, 1, 1),
         Parent = leftColumn
     })
-    create("UICorner", { Parent = self.FuzzSelectedButton })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.FuzzSelectedButton })
 
     self.StressTestButton = create("TextButton", {
         Name = "StressTestButton",
@@ -856,7 +862,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
         TextColor3 = Color3.new(1, 1, 1),
         Parent = leftColumn
     })
-    create("UICorner", { Parent = self.StressTestButton })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.StressTestButton })
 
     create("TextLabel", {
         Text = "Manual Payload Executor",
@@ -886,7 +892,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
         PlaceholderText = "Write Lua code that returns a table of arguments",
         Parent = rightColumn
     })
-    create("UICorner", { Parent = self.ScriptInput })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.ScriptInput })
 
     self.ExecuteButton = create("TextButton", {
         Name = "ExecuteButton",
@@ -899,7 +905,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
         TextColor3 = Color3.new(1, 1, 1),
         Parent = rightColumn
     })
-    create("UICorner", { Parent = self.ExecuteButton })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.ExecuteButton })
 end
 
 function RemoteSentinel.GUI:SetupScannerTab(tab)
@@ -992,11 +998,11 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
         Parent = controlFrame
     })
 
-    create("UICorner", {Parent = self.ScanBackdoorButton})
-    create("UICorner", {Parent = self.ScanStaticButton})
-    create("UICorner", {Parent = self.ScanAdminButton})
-    create("UICorner", {Parent = self.ScanInsecureButton})
-    create("UICorner", {Parent = self.ScanAntiCheatButton})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.ScanBackdoorButton})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.ScanStaticButton})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.ScanAdminButton})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.ScanInsecureButton})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.ScanAntiCheatButton})
 
     create("TextLabel", {
         Text = "Memory & Injection",
@@ -1020,7 +1026,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
         TextColor3 = Color3.new(1, 1, 1),
         Parent = leftColumn
     })
-    create("UICorner", {Parent = self.MemoryScanButton})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.MemoryScanButton})
 
     local requireFrame = create("Frame", {
         Size = UDim2.new(1, 0, 0, 100),
@@ -1051,7 +1057,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
         TextColor3 = Config.Colors.Text,
         Parent = requireFrame
     })
-    create("UICorner", {Parent = self.RequireAssetIdInput})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.RequireAssetIdInput})
 
     self.InjectRequireButton = create("TextButton", {
         Name = "InjectRequireButton",
@@ -1063,7 +1069,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
         TextColor3 = Color3.new(1, 1, 1),
         Parent = requireFrame
     })
-    create("UICorner", {Parent = self.InjectRequireButton})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.InjectRequireButton})
 
     create("TextLabel", {
         Text = "Scan Results / Source Viewer",
@@ -1090,7 +1096,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
         Padding = UDim.new(0, 2),
         Parent = self.ScanResultsFrame
     })
-    create("UICorner", {Parent = self.ScanResultsFrame})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.ScanResultsFrame})
 end
 
 function RemoteSentinel.GUI:SetupNetworkTab(tab)
@@ -1170,7 +1176,7 @@ function RemoteSentinel.GUI:SetupNetworkTab(tab)
         TextColor3 = Color3.new(1, 1, 1),
         Parent = leftColumn
     })
-    create("UICorner", {Parent = self.SendHttpRequestButton})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.SendHttpRequestButton})
 
     create("TextLabel", {
         Text = "Headers (JSON):",
@@ -1225,9 +1231,9 @@ function RemoteSentinel.GUI:SetupNetworkTab(tab)
         Parent = rightColumn
     })
 
-    create("UICorner", {Parent = self.HttpUrlInput})
-    create("UICorner", {Parent = self.HttpHeadersInput})
-    create("UICorner", {Parent = self.HttpBodyInput})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.HttpUrlInput})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.HttpHeadersInput})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.HttpBodyInput})
 end
 
 function RemoteSentinel.GUI:SetupRecorderTab(tab)
@@ -1285,9 +1291,9 @@ function RemoteSentinel.GUI:SetupRecorderTab(tab)
         Parent = controlsFrame
     })
 
-    create("UICorner", {Parent = self.RecordButton})
-    create("UICorner", {Parent = self.ReplayButton})
-    create("UICorner", {Parent = self.ClearRecordingButton})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.RecordButton})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.ReplayButton})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.ClearRecordingButton})
 
     self.RecorderFrame = create("ScrollingFrame", {
         Name = "RecorderFrame",
@@ -1302,7 +1308,7 @@ function RemoteSentinel.GUI:SetupRecorderTab(tab)
         Padding = UDim.new(0, 3),
         Parent = self.RecorderFrame
     })
-    create("UICorner", {Parent = self.RecorderFrame})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.RecorderFrame})
 end
 
 function RemoteSentinel.GUI:SetupAdvancedTab(tab)
@@ -1328,7 +1334,7 @@ function RemoteSentinel.GUI:SetupAdvancedTab(tab)
         TextColor3 = Color3.new(1, 1, 1),
         Parent = tab
     })
-    create("UICorner", {Parent = self.AnalyzerButton})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.AnalyzerButton})
 
     self.AnalyzerResultsFrame = create("ScrollingFrame", {
         Name = "AnalyzerResultsFrame",
@@ -1343,7 +1349,7 @@ function RemoteSentinel.GUI:SetupAdvancedTab(tab)
         Padding = UDim.new(0, 3),
         Parent = self.AnalyzerResultsFrame
     })
-    create("UICorner", {Parent = self.AnalyzerResultsFrame})
+    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.AnalyzerResultsFrame})
 end
 
 RemoteSentinel.Core = {}
@@ -1477,7 +1483,7 @@ function RemoteSentinel.Core:PopulateList(forceScan)
                         BackgroundColor3 = Config.Colors.Secondary,
                         Parent = listFrame
                     })
-                    create("UICorner", { Parent = itemFrame })
+                    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = itemFrame })
 
                     local btn = create("TextButton", {
                         Name = "SelectButton",
@@ -1521,7 +1527,7 @@ function RemoteSentinel.Core:PopulateList(forceScan)
                         TextSize = 14,
                         Parent = itemFrame
                     })
-                    create("UICorner", { CornerRadius = UDim.new(0, 4), Parent = spyButton })
+                    create("UICorner", { CornerRadius = UDim.new(0, 6), Parent = spyButton })
 
                     spyButton.MouseButton1Click:Connect(function()
                         RemoteSentinel.Hooks:ToggleSpy(remoteData)
@@ -1716,7 +1722,6 @@ do
     BackdoorRunner.canDebug = false
     BackdoorRunner.foundBackdoor = nil
 
-    local MAXTIMEOUT = 20
     local BACKDOOR_SOLVER = {}
     local BACKDOOR_FILTER = {}
     local URSTRING_TO_BACKDOOR = {}
@@ -1801,20 +1806,16 @@ do
         for _, r in ipairs(game:GetDescendants()) do
             filterRemote(r, remotes)
         end
-        if getnilinstances then
-            for _, r in ipairs(getnilinstances()) do
-                filterRemote(r, remotes)
-            end
-        end
         return remotes
     end
 
-    function BackdoorRunner:_internal_scan(remotes, delayFactor)
+    function BackdoorRunner:_internal_scan(remotes)
         local Core = RemoteSentinel.Core
         local GUI = RemoteSentinel.GUI
 
-        Core:Log("Dynamic backdoor scan started.", 0)
-        GUI.BackdoorStatusLabel.Text = "Status: Scan started..."
+        Core:Log("Varredura de backdoor dinâmica iniciada (modo furtivo).", 0)
+        Core:Log("Isso pode demorar um pouco para evitar detecção.", 2)
+        GUI.BackdoorStatusLabel.Text = "Status: Varredura iniciada..."
 
         remotes = remotes or getRemotes()
         local backdoor
@@ -1823,33 +1824,41 @@ do
             local gateway = URSTRING_TO_BACKDOOR[child.Name]
             if gateway then
                 backdoor = gateway
-                connection:Disconnect()
+                if connection.Connected then
+                    connection:Disconnect()
+                end
             end
         end)
 
-        GUI.BackdoorStatusLabel.Text = "Status: Testing " .. #remotes .. " remotes..."
+        GUI.BackdoorStatusLabel.Text = "Status: Testando " .. #remotes .. " remotes..."
+        
+        local timeOut = 15 + (#remotes * 0.3) 
 
-        for i, r in ipairs(remotes) do
-            for j, s in ipairs(BACKDOOR_SOLVER) do
-                local g = makeGateway(r, s)
-                local dummyName = urString(5, Workspace) .. i .. j
-                URSTRING_TO_BACKDOOR[dummyName] = g
-                s.makeDummy(r, dummyName)
+        task.spawn(function()
+            for i, r in ipairs(remotes) do
+                if not connection.Connected then break end 
+
+                GUI.BackdoorStatusLabel.Text = string.format("Status: Testando %d/%d", i, #remotes)
+
+                for j, s in ipairs(BACKDOOR_SOLVER) do
+                    local g = makeGateway(r, s)
+                    local dummyName = urString(5, Workspace) .. i .. j
+                    URSTRING_TO_BACKDOOR[dummyName] = g
+                    s.makeDummy(r, dummyName)
+                end
+                task.wait(0.25)
             end
-        end
-
-        local timeOut = math.max((LocalPlayer:GetNetworkPing() * (delayFactor or 1)) * #remotes, MAXTIMEOUT)
-        task.delay(timeOut, function()
-            if connection.Connected then connection:Disconnect() end
         end)
-
+        
         local endTime = tick() + timeOut
-        while connection.Connected do
-            GUI.BackdoorStatusLabel.Text = string.format("Status: Waiting... (%.1fs left)", endTime - tick())
+        while connection.Connected and tick() < endTime do
+            GUI.BackdoorStatusLabel.Text = string.format("Status: Aguardando... (%.1fs restantes)", endTime - tick())
             task.wait()
         end
 
-        GUI.BackdoorStatusLabel.Text = "Status: Scan finished."
+        if connection.Connected then connection:Disconnect() end
+
+        GUI.BackdoorStatusLabel.Text = "Status: Varredura finalizada."
         table.clear(URSTRING_TO_BACKDOOR)
         return backdoor
     end
@@ -1857,7 +1866,7 @@ do
     function BackdoorRunner:_internal_execute(code, gateway, canDebug)
         local Core = RemoteSentinel.Core
 
-        Core:Log("Executing code via backdoor: " .. gateway.b:GetFullName(), 0)
+        Core:Log("Executando código via backdoor: " .. gateway.b:GetFullName(), 0)
 
         if self.isExecuting then return end
         self.isExecuting = true
@@ -1886,9 +1895,9 @@ do
 
                     if not child.Value then
                         local err = child:GetAttribute("err")
-                        Core:Log("Execution error: " .. tostring(err), 3)
+                        Core:Log("Erro de execução: " .. tostring(err), 3)
                     else
-                        Core:Log("Script successfully executed.", 1)
+                        Core:Log("Script executado com sucesso.", 1)
                     end
                     completed:Fire(child.Value)
                 end
@@ -1902,7 +1911,7 @@ do
 
         completed.Event:Wait()
         self.isExecuting = false
-        Core:Log("Execution finished.", 0)
+        Core:Log("Execução finalizada.", 0)
     end
 
     function BackdoorRunner:ClearResults()
@@ -1931,7 +1940,7 @@ do
 
         btn.MouseButton1Click:Connect(function()
             self.foundBackdoor = gateway
-            RemoteSentinel.Core:Log("Selected backdoor: " .. fullName, 1)
+            RemoteSentinel.Core:Log("Backdoor selecionado: " .. fullName, 1)
             for _, child in ipairs(list:GetChildren()) do
                 if child:IsA("TextButton") then
                     child.BackgroundColor3 = Config.Colors.Secondary
@@ -1948,7 +1957,7 @@ do
 
     function BackdoorRunner:StartScan()
         if self.isScanning then
-            RemoteSentinel.Core:Log("A scan is already in progress.", 2)
+            RemoteSentinel.Core:Log("Uma varredura já está em progresso.", 2)
             return
         end
 
@@ -1958,20 +1967,20 @@ do
 
         task.spawn(function()
             local startTime = tick()
-            local backdoor = self:_internal_scan(nil, 2.5)
+            local backdoor = self:_internal_scan()
 
             if backdoor then
                 self:AddResult(backdoor)
                 self.foundBackdoor = backdoor
-                RemoteSentinel.Core:Log(string.format("Backdoor found: %s", backdoor.b:GetFullName()), 5)
-                RemoteSentinel.GUI.BackdoorStatusLabel.Text = "Status: Backdoor found!"
+                RemoteSentinel.Core:Log(string.format("Backdoor encontrado: %s", backdoor.b:GetFullName()), 5)
+                RemoteSentinel.GUI.BackdoorStatusLabel.Text = "Status: Backdoor encontrado!"
             else
-                RemoteSentinel.Core:Log("No exploitable backdoors found.", 2)
-                RemoteSentinel.GUI.BackdoorStatusLabel.Text = "Status: No backdoor found."
+                RemoteSentinel.Core:Log("Nenhum backdoor explorável encontrado.", 2)
+                RemoteSentinel.GUI.BackdoorStatusLabel.Text = "Status: Nenhum backdoor encontrado."
             end
 
             local duration = string.format("%.2f", tick() - startTime)
-            RemoteSentinel.Core:Log(string.format("Dynamic scan finished in %s seconds.", duration), 1)
+            RemoteSentinel.Core:Log(string.format("Varredura dinâmica finalizada em %s segundos.", duration), 1)
             self.isScanning = false
         end)
     end
@@ -1980,13 +1989,13 @@ do
         if self.isExecuting then return end
 
         if not self.foundBackdoor then
-            RemoteSentinel.Core:Log("No backdoor has been found or selected. Please scan first.", 3)
+            RemoteSentinel.Core:Log("Nenhum backdoor foi encontrado ou selecionado. Por favor, verifique primeiro.", 3)
             return
         end
 
         local code = RemoteSentinel.GUI.BackdoorEditor.Text
         if not code or code:gsub("%s", "") == "" then
-            RemoteSentinel.Core:Log("Execution code is empty.", 3)
+            RemoteSentinel.Core:Log("O código de execução está vazio.", 3)
             return
         end
 
@@ -2000,7 +2009,7 @@ do
         local state, color = self.canDebug and "ON" or "OFF", self.canDebug and Config.Colors.Success or Config.Colors.Warning
         RemoteSentinel.GUI.BackdoorDebugToggle.Text = "Debug Mode: " .. state
         RemoteSentinel.GUI.BackdoorDebugToggle.TextColor3 = color
-        RemoteSentinel.Core:Log("Backdoor debug mode is now " .. state, 2)
+        RemoteSentinel.Core:Log("O modo de depuração do backdoor agora está " .. state, 2)
     end
 end
 
@@ -2959,3 +2968,4 @@ end)
 if not success then
     warn("Falha ao inicializar o Remote Sentinel: ", err)
 end
+
