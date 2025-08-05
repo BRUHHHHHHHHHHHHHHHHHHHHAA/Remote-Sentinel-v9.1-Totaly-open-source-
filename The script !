@@ -1,3 +1,4 @@
+
 local SentinelWorkspace = getgenv() or {}
 if type(SentinelWorkspace) ~= "table" then SentinelWorkspace = {} end
 getgenv().SentinelWorkspace = SentinelWorkspace
@@ -39,7 +40,7 @@ local TweenService = game:GetService("TweenService")
 local LocalPlayer = Players.LocalPlayer
 
 local Config = {
-    AppName = "Remote Sentinel v9.0 (FDS - Melhorado com Backdoor.exe)",
+    AppName = "Remote Sentinel v10.0 (FDS - Melhorado com Decompiler)",
     FuzzingDelay = 0.01,
     ScanThrottle = 0.001,
     SerializerMaxDepth = 10,
@@ -306,7 +307,7 @@ function RemoteSentinel.GUI:Create()
     })
     create("TextLabel", {
         Name = "TitleLabel",
-        Size = UDim2.new(1, -30, 1, 0),
+        Size = UDim2.new(1, -60, 1, 0),
         Text = Config.AppName,
         Font = Enum.Font.SourceSansBold,
         TextColor3 = Config.Colors.Text,
@@ -335,6 +336,33 @@ function RemoteSentinel.GUI:Create()
             screenGui:Destroy()
         end)
         exitTween:Play()
+    end)
+    
+    local minimizeButton = create("TextButton", {
+        Name = "MinimizeButton",
+        Size = UDim2.new(0, 30, 1, 0),
+        Position = UDim2.new(1, -60, 0, 0),
+        Text = "—",
+        Font = Enum.Font.SourceSansBold,
+        TextSize = 16,
+        BackgroundColor3 = Config.Colors.Info,
+        TextColor3 = Color3.new(1, 1, 1),
+        Parent = titleBar
+    })
+
+    self.isMinimized = false
+    local originalSize = UDim2.new(0, 1200, 0, 800)
+    
+    minimizeButton.MouseButton1Click:Connect(function()
+        self.isMinimized = not self.isMinimized
+        mainFrame.ClipsDescendants = true
+        if self.isMinimized then
+            minimizeButton.Text = "❐"
+            animate(mainFrame, TweenInfo.new(0.3), { Size = UDim2.new(originalSize.X.Scale, originalSize.X.Offset, 0, 30) }):Play()
+        else
+            minimizeButton.Text = "—"
+            animate(mainFrame, TweenInfo.new(0.3), { Size = originalSize }):Play()
+        end
     end)
 
     local tabFrame = create("Frame", {
@@ -393,7 +421,7 @@ function RemoteSentinel.GUI:Create()
     mainFrame.Size = UDim2.new(0,0,0,0)
     mainFrame.Position = UDim2.new(0.5,0,0.5,0)
     local entryTween = animate(mainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {
-        Size = UDim2.new(0, 1200, 0, 800),
+        Size = originalSize,
         Position = UDim2.new(0.5, -600, 0.5, -400)
     })
     entryTween:Play()
@@ -477,7 +505,7 @@ function RemoteSentinel.GUI:SetupMainTab(tab)
         TextColor3 = Config.Colors.Text,
         Font = Enum.Font.SourceSans,
         TextSize = 14,
-        PlaceholderText = "Filtrar por nome ou caminho...",
+        PlaceholderText = "Filtrar remotes por nome/caminho...",
         ClearTextOnFocus = false,
         Parent = listColumn
     })
@@ -519,7 +547,7 @@ function RemoteSentinel.GUI:SetupMainTab(tab)
         Size = UDim2.new(1, 0, 1, 0),
         BackgroundColor3 = Config.Colors.Info,
         Font = Enum.Font.SourceSansBold,
-        Text = "Scan All Remotes",
+        Text = "Escanear Todos os Remotes",
         TextColor3 = Color3.new(1, 1, 1),
         TextSize = 14,
         Parent = listActionsFrame
@@ -556,7 +584,7 @@ function RemoteSentinel.GUI:SetupMainTab(tab)
     })
     create("TextLabel", {
         Name = "TitleLabel",
-        Text = "Details Panel",
+        Text = "Painel de Detalhes",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         TextColor3 = Config.Colors.Text,
@@ -586,7 +614,7 @@ function RemoteSentinel.GUI:SetupMainTab(tab)
         Name = "ClearLogButton",
         Size = UDim2.new(0, 60, 0, 20),
         Position = UDim2.new(1, -65, 0, 5),
-        Text = "Clear",
+        Text = "Limpar",
         Font = Enum.Font.SourceSans,
         TextSize = 12,
         BackgroundColor3 = Config.Colors.Secondary,
@@ -621,7 +649,7 @@ function RemoteSentinel.GUI:SetupBackdoorTab(tab)
     })
 
     create("TextLabel", {
-        Text = "Backdoor Scanner & Executor",
+        Text = "Executor & Scanner de Backdoor",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         TextColor3 = Config.Colors.Text,
@@ -634,7 +662,7 @@ function RemoteSentinel.GUI:SetupBackdoorTab(tab)
 
     self.BackdoorScanButton = create("TextButton", {
         Name = "BackdoorScanButton",
-        Text = "Start Dynamic Scan",
+        Text = "Iniciar Varredura Dinâmica",
         Size = UDim2.new(1, 0, 0, 35),
         Position = UDim2.new(0, 0, 0, 30),
         Font = Enum.Font.SourceSansBold,
@@ -646,7 +674,7 @@ function RemoteSentinel.GUI:SetupBackdoorTab(tab)
 
     self.BackdoorDebugToggle = create("TextButton", {
         Name = "BackdoorDebugToggle",
-        Text = "Debug Mode: OFF",
+        Text = "Modo Debug: OFF",
         Size = UDim2.new(1, 0, 0, 30),
         Position = UDim2.new(0, 0, 0, 70),
         Font = Enum.Font.SourceSansBold,
@@ -658,7 +686,7 @@ function RemoteSentinel.GUI:SetupBackdoorTab(tab)
 
     self.BackdoorStatusLabel = create("TextLabel", {
         Name = "BackdoorStatusLabel",
-        Text = "Status: Idle",
+        Text = "Status: Ocioso",
         Font = Enum.Font.SourceSans,
         TextSize = 14,
         TextColor3 = Config.Colors.TextSecondary,
@@ -670,7 +698,7 @@ function RemoteSentinel.GUI:SetupBackdoorTab(tab)
     })
 
     create("TextLabel", {
-        Text = "Found Backdoors:",
+        Text = "Backdoors Encontrados:",
         Font = Enum.Font.SourceSansBold,
         TextSize = 14,
         TextColor3 = Config.Colors.Text,
@@ -697,7 +725,7 @@ function RemoteSentinel.GUI:SetupBackdoorTab(tab)
     })
 
     create("TextLabel", {
-        Text = "Code Executor",
+        Text = "Executor de Código",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         TextColor3 = Config.Colors.Text,
@@ -721,7 +749,7 @@ function RemoteSentinel.GUI:SetupBackdoorTab(tab)
         MultiLine = true,
         TextXAlignment = Enum.TextXAlignment.Left,
         TextYAlignment = Enum.TextYAlignment.Top,
-        PlaceholderText = "Enter Lua code to execute on the server...",
+        PlaceholderText = "Digite o código Lua para executar no servidor...",
         Parent = rightColumn
     })
     create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.BackdoorEditor })
@@ -730,7 +758,7 @@ function RemoteSentinel.GUI:SetupBackdoorTab(tab)
         Name = "BackdoorExecuteButton",
         Size = UDim2.new(1, 0, 0, 35),
         Position = UDim2.new(0, 0, 1, -35),
-        Text = "Execute via Backdoor",
+        Text = "Executar via Backdoor",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         BackgroundColor3 = Config.Colors.Success,
@@ -758,7 +786,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
     })
 
     create("TextLabel", {
-        Text = "Fuzzer Configuration",
+        Text = "Configuração do Fuzzer",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         TextColor3 = Config.Colors.Text,
@@ -770,7 +798,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
     })
 
     create("TextLabel", {
-        Text = "Fuzzing Profile:",
+        Text = "Perfil de Fuzzing:",
         Font = Enum.Font.SourceSans,
         TextSize = 14,
         TextColor3 = Config.Colors.TextSecondary,
@@ -783,7 +811,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
 
     self.ProfileDropdown = Dropdown.new(leftColumn, "ProfileDropdown")
     self.ProfileDropdown.MainFrame.Position = UDim2.new(0, 0, 0, 60)
-    self.ProfileDropdown:SetItems({"Basic", "Injeção de Comando", "Manipulação de Stats", "Destrutivo / Crash", "Incompatibilidade de Tipos", "Exploração de Metatables", "Abuso de Memória e Ambiente", "Custom"})
+    self.ProfileDropdown:SetItems({"Básico", "Injeção de Comando", "Manipulação de Stats", "Destrutivo / Crash", "Incompatibilidade de Tipos", "Exploração de Metatables", "Abuso de Memória e Ambiente", "Custom"})
 
     local togglesFrame = create("Frame", {
         Size = UDim2.new(1, 0, 0, 30),
@@ -800,7 +828,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
     self.HeuristicToggle = create("TextButton", {
         Name = "HeuristicToggle",
         Size = UDim2.new(0.5, -2.5, 1, 0),
-        Text = "Heuristics: OFF",
+        Text = "Análise Heurística: OFF",
         Font = Enum.Font.SourceSansBold,
         BackgroundColor3 = Config.Colors.Secondary,
         TextColor3 = Config.Colors.Warning,
@@ -810,7 +838,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
     self.AdaptiveToggle = create("TextButton", {
         Name = "AdaptiveToggle",
         Size = UDim2.new(0.5, -2.5, 1, 0),
-        Text = "Adaptive: OFF",
+        Text = "Adaptativo: OFF",
         Font = Enum.Font.SourceSansBold,
         BackgroundColor3 = Config.Colors.Secondary,
         TextColor3 = Config.Colors.Warning,
@@ -833,7 +861,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
         MultiLine = true,
         TextXAlignment = Enum.TextXAlignment.Left,
         TextYAlignment = Enum.TextYAlignment.Top,
-        PlaceholderText = "Enter Lua code for custom payloads here...",
+        PlaceholderText = "Digite o código Lua para payloads customizados aqui...",
         Parent = leftColumn
     })
     create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.CustomFuzzInput })
@@ -842,7 +870,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
         Name = "FuzzSelectedButton",
         Size = UDim2.new(1, 0, 0, 35),
         Position = UDim2.new(0, 0, 1, -75),
-        Text = "Fuzz Selected Remote",
+        Text = "Fuzz no Remote Selecionado",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         BackgroundColor3 = Config.Colors.Warning,
@@ -855,7 +883,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
         Name = "StressTestButton",
         Size = UDim2.new(1, 0, 0, 35),
         Position = UDim2.new(0, 0, 1, -35),
-        Text = "Network Stress Test",
+        Text = "Teste de Estresse de Rede",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         BackgroundColor3 = Config.Colors.Vulnerable,
@@ -865,7 +893,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
     create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.StressTestButton })
 
     create("TextLabel", {
-        Text = "Manual Payload Executor",
+        Text = "Executor de Payload Manual",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         TextColor3 = Config.Colors.Text,
@@ -889,7 +917,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
         MultiLine = true,
         TextXAlignment = Enum.TextXAlignment.Left,
         TextYAlignment = Enum.TextYAlignment.Top,
-        PlaceholderText = "Write Lua code that returns a table of arguments",
+        PlaceholderText = "Escreva código Lua que retorna uma tabela de argumentos",
         Parent = rightColumn
     })
     create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.ScriptInput })
@@ -898,7 +926,7 @@ function RemoteSentinel.GUI:SetupFuzzerTab(tab)
         Name = "ExecuteButton",
         Size = UDim2.new(1, 0, 0, 35),
         Position = UDim2.new(0, 0, 1, -35),
-        Text = "Execute Payload on Selected Remote",
+        Text = "Executar Payload no Remote Selecionado",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         BackgroundColor3 = Config.Colors.Success,
@@ -926,7 +954,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
     })
 
     create("TextLabel", {
-        Text = "Vulnerability Scanners",
+        Text = "Scanners de Vulnerabilidade",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         TextColor3 = Config.Colors.Text,
@@ -950,7 +978,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
 
     self.ScanBackdoorButton = create("TextButton", {
         Name = "ScanBackdoor",
-        Text = "Scan for Common Backdoors",
+        Text = "Scan por Backdoors Comuns",
         Size = UDim2.new(1, 0, 0, 35),
         Font = Enum.Font.SourceSansBold,
         BackgroundColor3 = Config.Colors.Vulnerable,
@@ -960,7 +988,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
 
     self.ScanStaticButton = create("TextButton", {
         Name = "ScanStatic",
-        Text = "Static Analysis (Client Scripts)",
+        Text = "Análise Estática (Scripts do Cliente)",
         Size = UDim2.new(1, 0, 0, 35),
         Font = Enum.Font.SourceSansBold,
         BackgroundColor3 = Config.Colors.Vulnerable,
@@ -970,7 +998,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
 
     self.ScanAdminButton = create("TextButton", {
         Name = "ScanAdmin",
-        Text = "Scan for Common Admin Systems",
+        Text = "Scan por Sistemas de Admin Comuns",
         Size = UDim2.new(1, 0, 0, 35),
         Font = Enum.Font.SourceSansBold,
         BackgroundColor3 = Config.Colors.Info,
@@ -980,7 +1008,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
 
     self.ScanInsecureButton = create("TextButton", {
         Name = "ScanInsecure",
-        Text = "Scan for Insecure Remote Patterns",
+        Text = "Scan por Padrões Inseguros de Remotes",
         Size = UDim2.new(1, 0, 0, 35),
         Font = Enum.Font.SourceSansBold,
         BackgroundColor3 = Config.Colors.Info,
@@ -990,7 +1018,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
 
     self.ScanAntiCheatButton = create("TextButton", {
         Name = "ScanAntiCheat",
-        Text = "Scan for Anti-Cheat Patterns",
+        Text = "Scan por Padrões de Anti-Cheat",
         Size = UDim2.new(1, 0, 0, 35),
         Font = Enum.Font.SourceSansBold,
         BackgroundColor3 = Config.Colors.Warning,
@@ -1005,7 +1033,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
     create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.ScanAntiCheatButton})
 
     create("TextLabel", {
-        Text = "Memory & Injection",
+        Text = "Memória & Injeção",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         TextColor3 = Config.Colors.Text,
@@ -1018,7 +1046,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
 
     self.MemoryScanButton = create("TextButton", {
         Name = "MemoryScan",
-        Text = "Scan Memory for References",
+        Text = "Scan de Memória por Referências",
         Size = UDim2.new(1, 0, 0, 35),
         Position = UDim2.new(0, 0, 0, 295),
         Font = Enum.Font.SourceSansBold,
@@ -1036,7 +1064,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
     })
 
     create("TextLabel", {
-        Text = "Insecure 'require' Exploiter",
+        Text = "Explorador de 'require' Inseguro",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         TextColor3 = Config.Colors.Text,
@@ -1049,7 +1077,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
     self.RequireAssetIdInput = create("TextBox", {
         Name = "RequireAssetIdInput",
         Text = "",
-        PlaceholderText = "Malicious Asset ID...",
+        PlaceholderText = "Asset ID Malicioso...",
         Size = UDim2.new(1, 0, 0, 30),
         Position = UDim2.new(0, 0, 0, 25),
         Font = Enum.Font.SourceSans,
@@ -1061,7 +1089,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
 
     self.InjectRequireButton = create("TextButton", {
         Name = "InjectRequireButton",
-        Text = "Attempt require() Injection",
+        Text = "Tentar Injeção de require()",
         Size = UDim2.new(1, 0, 0, 35),
         Position = UDim2.new(0, 0, 0, 60),
         Font = Enum.Font.SourceSansBold,
@@ -1072,7 +1100,7 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
     create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.InjectRequireButton})
 
     create("TextLabel", {
-        Text = "Scan Results / Source Viewer",
+        Text = "Resultados / Visualizador de Código",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         TextColor3 = Config.Colors.Text,
@@ -1099,9 +1127,100 @@ function RemoteSentinel.GUI:SetupScannerTab(tab)
     create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.ScanResultsFrame})
 end
 
+function RemoteSentinel.GUI:SetupDecompilerTab(tab)
+    local leftColumn = create("Frame", {
+        Name = "LeftDecompiler",
+        Size = UDim2.new(0.4, -5, 1, 0),
+        Position = UDim2.new(0, 0, 0, 0),
+        BackgroundTransparency = 1,
+        Parent = tab
+    })
+
+    local rightColumn = create("Frame", {
+        Name = "RightDecompiler",
+        Size = UDim2.new(0.6, -5, 1, 0),
+        Position = UDim2.new(0.4, 5, 0, 0),
+        BackgroundTransparency = 1,
+        Parent = tab
+    })
+
+    create("TextLabel", {
+        Text = "Analisador de Código & Buscador de Referências",
+        Font = Enum.Font.SourceSansBold,
+        TextSize = 16,
+        TextColor3 = Config.Colors.Text,
+        Size = UDim2.new(1, 0, 0, 20),
+        Position = UDim2.new(0, 0, 0, 5),
+        BackgroundTransparency = 1,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Parent = leftColumn
+    })
+
+    self.FindReferencesButton = create("TextButton", {
+        Name = "FindReferencesButton",
+        Text = "Encontrar Referências ao Remote Selecionado",
+        Size = UDim2.new(1, 0, 0, 35),
+        Position = UDim2.new(0, 0, 0, 30),
+        Font = Enum.Font.SourceSansBold,
+        BackgroundColor3 = Config.Colors.Accent,
+        TextColor3 = Color3.new(1, 1, 1),
+        Parent = leftColumn
+    })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.FindReferencesButton })
+
+    self.DecompilerResultsFrame = create("ScrollingFrame", {
+        Name = "DecompilerResultsFrame",
+        Size = UDim2.new(1, 0, 1, -70),
+        Position = UDim2.new(0, 0, 0, 70),
+        BackgroundColor3 = Config.Colors.Background,
+        BorderColor3 = Config.Colors.Secondary,
+        Parent = leftColumn
+    })
+    create("UIListLayout", { Name = "Layout", Padding = UDim.new(0, 2), Parent = self.DecompilerResultsFrame })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.DecompilerResultsFrame })
+
+    create("TextLabel", {
+        Text = "Visualizador de Código-Fonte",
+        Font = Enum.Font.SourceSansBold,
+        TextSize = 16,
+        TextColor3 = Config.Colors.Text,
+        Size = UDim2.new(1, 0, 0, 20),
+        Position = UDim2.new(0, 0, 0, 5),
+        BackgroundTransparency = 1,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Parent = rightColumn
+    })
+
+    self.DecompilerSourceViewer = create("ScrollingFrame", {
+        Name = "DecompilerSourceViewer",
+        Size = UDim2.new(1, 0, 1, -30),
+        Position = UDim2.new(0, 0, 0, 30),
+        BackgroundColor3 = Config.Colors.Background,
+        BorderColor3 = Config.Colors.Secondary,
+        ClipsDescendants = true,
+        Parent = rightColumn
+    })
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.DecompilerSourceViewer })
+    self.DecompilerSourceLabel = create("TextLabel", {
+        Name = "SourceLabel",
+        Text = "-- Selecione um remote na aba 'Main' e clique em 'Encontrar Referências'.",
+        Font = Enum.Font.Code,
+        TextSize = 12,
+        RichText = true,
+        Size = UDim2.new(1, -10, 0, 0),
+        Position = UDim2.new(0,5,0,5),
+        TextXAlignment = Enum.TextXAlignment.Left,
+        TextYAlignment = Enum.TextYAlignment.Top,
+        TextColor3 = Config.Colors.TextSecondary,
+        BackgroundTransparency = 1,
+        AutomaticSize = Enum.AutomaticSize.Y,
+        Parent = self.DecompilerSourceViewer
+    })
+end
+
 function RemoteSentinel.GUI:SetupNetworkTab(tab)
     create("TextLabel", {
-        Text = "HTTP Requester (for external backdoors)",
+        Text = "Requisições de Rede (HTTP)",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         TextColor3 = Config.Colors.Text,
@@ -1151,7 +1270,7 @@ function RemoteSentinel.GUI:SetupNetworkTab(tab)
     })
 
     create("TextLabel", {
-        Text = "Method:",
+        Text = "Método:",
         Font = Enum.Font.SourceSans,
         TextSize = 14,
         TextColor3 = Config.Colors.Text,
@@ -1168,7 +1287,7 @@ function RemoteSentinel.GUI:SetupNetworkTab(tab)
 
     self.SendHttpRequestButton = create("TextButton", {
         Name = "SendHttpRequestButton",
-        Text = "Send HTTP Request",
+        Text = "Enviar Requisição HTTP",
         Size = UDim2.new(1, 0, 0, 40),
         Position = UDim2.new(0, 0, 0, 120),
         Font = Enum.Font.SourceSansBold,
@@ -1205,7 +1324,7 @@ function RemoteSentinel.GUI:SetupNetworkTab(tab)
     })
 
     create("TextLabel", {
-        Text = "Body:",
+        Text = "Corpo (Body):",
         Font = Enum.Font.SourceSans,
         TextSize = 14,
         TextColor3 = Config.Colors.Text,
@@ -1238,7 +1357,7 @@ end
 
 function RemoteSentinel.GUI:SetupRecorderTab(tab)
     create("TextLabel", {
-        Text = "Call Recorder & Replayer",
+        Text = "Gravador & Replayer de Chamadas",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         TextColor3 = Config.Colors.Text,
@@ -1263,7 +1382,7 @@ function RemoteSentinel.GUI:SetupRecorderTab(tab)
 
     self.RecordButton = create("TextButton", {
         Name = "RecordButton",
-        Text = "⏺ Start Recording",
+        Text = "⏺ Iniciar Gravação",
         Font = Enum.Font.SourceSansBold,
         Size = UDim2.new(0.25, 0, 1, 0),
         BackgroundColor3 = Config.Colors.Secondary,
@@ -1283,7 +1402,7 @@ function RemoteSentinel.GUI:SetupRecorderTab(tab)
 
     self.ClearRecordingButton = create("TextButton", {
         Name = "ClearRecording",
-        Text = "Clear",
+        Text = "Limpar",
         Font = Enum.Font.SourceSansBold,
         Size = UDim2.new(0.25, 0, 1, 0),
         BackgroundColor3 = Config.Colors.Warning,
@@ -1313,7 +1432,7 @@ end
 
 function RemoteSentinel.GUI:SetupAdvancedTab(tab)
     create("TextLabel", {
-        Text = "Advanced Analysis Tools (Experimental)",
+        Text = "Ferramentas de Análise Avançada (Experimental)",
         Font = Enum.Font.SourceSansBold,
         TextSize = 16,
         TextColor3 = Config.Colors.Text,
@@ -1326,7 +1445,7 @@ function RemoteSentinel.GUI:SetupAdvancedTab(tab)
 
     self.AnalyzerButton = create("TextButton", {
         Name = "AnalyzerButton",
-        Text = "Analyze Logic of Last Successful Fuzz",
+        Text = "Analisar Lógica do Último Fuzz Bem-Sucedido",
         Font = Enum.Font.SourceSansBold,
         Size = UDim2.new(1, -10, 0, 35),
         Position = UDim2.new(0, 5, 0, 30),
@@ -1334,7 +1453,7 @@ function RemoteSentinel.GUI:SetupAdvancedTab(tab)
         TextColor3 = Color3.new(1, 1, 1),
         Parent = tab
     })
-    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.AnalyzerButton})
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.AnalyzerButton })
 
     self.AnalyzerResultsFrame = create("ScrollingFrame", {
         Name = "AnalyzerResultsFrame",
@@ -1349,7 +1468,7 @@ function RemoteSentinel.GUI:SetupAdvancedTab(tab)
         Padding = UDim.new(0, 3),
         Parent = self.AnalyzerResultsFrame
     })
-    create("UICorner", {CornerRadius = UDim.new(0, 8), Parent = self.AnalyzerResultsFrame})
+    create("UICorner", { CornerRadius = UDim.new(0, 8), Parent = self.AnalyzerResultsFrame })
 end
 
 RemoteSentinel.Core = {}
@@ -1457,7 +1576,7 @@ function RemoteSentinel.Core:PopulateList(forceScan)
             gui.RefreshButton.Text = "Verificando..."
             self:UpdateStatus("Iniciando varredura completa...")
             self:ScanInstances()
-            gui.RefreshButton.Text = "Scan All Remotes"
+            gui.RefreshButton.Text = "Escanear Todos os Remotes"
             gui.RefreshButton.Selectable = true
         end
 
@@ -1584,11 +1703,11 @@ function RemoteSentinel.Core:UpdateDetailPanel(remoteData)
         })
     end
 
-    addDetail("Name", remoteData.instance.Name)
-    addDetail("Class", remoteData.type)
-    addDetail("Path", remoteData.instance:GetFullName())
-    addDetail("Parent", remoteData.instance.Parent and remoteData.instance.Parent:GetFullName() or "nil")
-    addDetail("Hooked", tostring(remoteData.isHooked))
+    addDetail("Nome", remoteData.instance.Name)
+    addDetail("Classe", remoteData.type)
+    addDetail("Caminho", remoteData.instance:GetFullName())
+    addDetail("Pai", remoteData.instance.Parent and remoteData.instance.Parent:GetFullName() or "nil")
+    addDetail("Hookado", tostring(remoteData.isHooked))
 end
 
 function RemoteSentinel.Core:Execute(remoteData, args, callback)
@@ -2007,7 +2126,7 @@ do
     function BackdoorRunner:ToggleDebug()
         self.canDebug = not self.canDebug
         local state, color = self.canDebug and "ON" or "OFF", self.canDebug and Config.Colors.Success or Config.Colors.Warning
-        RemoteSentinel.GUI.BackdoorDebugToggle.Text = "Debug Mode: " .. state
+        RemoteSentinel.GUI.BackdoorDebugToggle.Text = "Modo Debug: " .. state
         RemoteSentinel.GUI.BackdoorDebugToggle.TextColor3 = color
         RemoteSentinel.Core:Log("O modo de depuração do backdoor agora está " .. state, 2)
     end
@@ -2037,9 +2156,9 @@ function RemoteSentinel.Fuzzer:GetPayloads(profileName)
             {LocalPlayer}, {playerInstance}
         },
 
-        ['Injeção de Comando'] = {},
+        CommandInjection = {},
 
-        ['Manipulação de Stats'] = {
+        StatsManipulation = {
             {"SetStat", "Cash", 9e15}, {"AddStat", "Money", 1e12}, {"give", "Cash", 9e15},
             {"set", "Points", 9e15}, {"Rebirth", 1000}, {"add", "Gems", -9e15},
             {"set", "Strength", "inf"}, {"add", "Level", 9999},
@@ -2047,31 +2166,31 @@ function RemoteSentinel.Fuzzer:GetPayloads(profileName)
             {"setvalue", "all", "Cash", 9e15}, {"SetData", "Money", 1e18}, {"setleaderstat", "Cash", 9e9}
         },
 
-        ['Destrutivo / Crash'] = {
+        DestructiveCrash = {
             {nan}, {inf}, {-inf}, {string.rep("A", 2^15)}, {nil, "some_action"},
             {Vector3.new(inf, inf, inf)}, {CFrame.new(nan,nan,nan)}, {Color3.new(nan,nan,nan)},
             {playerInstance, playerInstance, playerInstance}
         },
 
-        ['Incompatibilidade de Tipos'] = {
+        TypeMismatch = {
             {123, "string", true}, {Vector3.new(), CFrame.new()},
             {UDim2.new(1,1,1,1)}, {Color3.new(1,0,1)}, {Enum.HumanoidStateType.Running},
             {{key="value"}, {1,2,3}}, {function() print("exploited") end}
         },
 
-        ['Exploração de Metatables'] = {
-            {setmetatable({}, {__index = function(t,k) error("Leak via __index: "..tostring(k)) end})},
-            {setmetatable({}, {__newindex = function(t,k,v) error("Leak via __newindex on key: "..tostring(k)) end})},
+        MetatableExploit = {
+            {setmetatable({}, {__index = function(_,k) error("Leak via __index: "..tostring(k)) end})},
+            {setmetatable({}, {__newindex = function(_,k,v) error("Leak via __newindex on key: "..tostring(k)) end})},
             {setmetatable({}, {__namecall = function(...) local a = {...}; table.insert(a, 1, "Leaked Namecall:"); error(table.concat(a, " ")) end})},
-            {setmetatable({}, {__tostring = function(t) error("Leak via __tostring") end})},
+            {setmetatable({}, {__tostring = function(_) error("Leak via __tostring") end})},
             {setmetatable({}, {__call = function(...) error("Leak via __call") end})},
             {setmetatable({}, {__metatable = "locked"})},
             {setmetatable({}, {__gc = function() while true do end end})}
         },
 
-        ['Abuso de Memória e Ambiente'] = {
+        MemoryAbuse = {
             {string.rep("A", 2^16)},
-            {(function() local t = {}; for i=1,128 do t = {t} end; return t end)()},
+            {(function() local t = {}; for _=1,128 do t = {t} end; return t end)()},
             {table.create(20000, "flood")},
             {setmetatable({}, {__index = getfenv})},
             {setmetatable({}, {__index = getmetatable})}
@@ -2080,17 +2199,17 @@ function RemoteSentinel.Fuzzer:GetPayloads(profileName)
 
     for _, cmd in ipairs({"kill", "kick", "ban", "bring", "tp", "respawn", "explode", "jail", "shutdown"}) do
         for _, prefix in ipairs(prefixes) do
-            table.insert(profiles['Injeção de Comando'], {prefix .. cmd, "all"})
-            table.insert(profiles['Injeção de Comando'], {prefix .. cmd, localPlayerName})
-            table.insert(profiles['Injeção de Comando'], {cmd, "all"})
+            table.insert(profiles.CommandInjection, {prefix .. cmd, "all"})
+            table.insert(profiles.CommandInjection, {prefix .. cmd, localPlayerName})
+            table.insert(profiles.CommandInjection, {cmd, "all"})
         end
     end
 
     for _, cmd in ipairs({"god", "fly", "noclip", "btools", "admin", "mod"}) do
          for _, prefix in ipairs(prefixes) do
-            table.insert(profiles['Injeção de Comando'], {prefix .. cmd, "me"})
-            table.insert(profiles['Injeção de Comando'], {prefix .. cmd, localPlayerName})
-            table.insert(profiles['Injeção de Comando'], {cmd, "me"})
+            table.insert(profiles.CommandInjection, {prefix .. cmd, "me"})
+            table.insert(profiles.CommandInjection, {prefix .. cmd, localPlayerName})
+            table.insert(profiles.CommandInjection, {cmd, "me"})
         end
     end
 
@@ -2341,11 +2460,11 @@ function RemoteSentinel.Recorder:ToggleRecording()
             RemoteSentinel.Core:Log("Spy ativado automaticamente para gravação.", 2)
         end
 
-        gui.RecordButton.Text = "■ Stop Recording"
+        gui.RecordButton.Text = "■ Parar Gravação"
         gui.RecordButton.TextColor3 = Config.Colors.Warning
         RemoteSentinel.Core:Log("Gravação iniciada para " .. RemoteSentinel.SelectedInstanceData.instance.Name, 1)
     else
-        gui.RecordButton.Text = "⏺ Start Recording"
+        gui.RecordButton.Text = "⏺ Iniciar Gravação"
         gui.RecordButton.TextColor3 = Config.Colors.Error
         RemoteSentinel.Core:Log("Gravação parada.", 2)
     end
@@ -2419,13 +2538,14 @@ RemoteSentinel.Scanner.SyntaxHighlighter = {}
 
 function RemoteSentinel.Scanner.SyntaxHighlighter:Highlight(source)
     if not pcall(loadstring, "return " .. source) and not pcall(loadstring, source) then
-        return "<font color='#"..Config.Colors.Error:ToHex().."'>ERROR: Could not load source code.</font>"
+        return "<font color='#"..Config.Colors.Error:ToHex().."'>ERRO: Não foi possível carregar o código-fonte.</font>"
     end
 
     local function wrap(str, color)
         return string.format("<font color='#%s'>%s</font>", color:ToHex(), str)
     end
 
+    source = source:gsub("&", "&amp;"):gsub("<", "&lt;"):gsub(">", "&gt;")
     source = source:gsub("(--%[=*%[.-%]=*--])", function(s) return wrap(s, Config.Colors.TextSecondary) end)
     source = source:gsub("(--[^\n]*)", function(s) return wrap(s, Config.Colors.TextSecondary) end)
     source = source:gsub("(\"[^\"]*\")", function(s) return wrap(s, Config.Colors.Success) end)
@@ -2650,11 +2770,11 @@ function RemoteSentinel.Scanner:ScanForAdminSystems()
         local instance = game:FindFirstChild(name, true)
         if instance then
             found = found + 1
-            self:AddResult(string.format("DETECTED: %s system found at %s", name, instance:GetFullName()), Config.Colors.Warning)
+            self:AddResult(string.format("DETECTADO: Sistema %s encontrado em %s", name, instance:GetFullName()), Config.Colors.Warning)
         end
     end
 
-    RemoteSentinel.Core:Log(string.format("Admin system scan complete. Found %d known systems.", found), found > 0 and 2 or 1)
+    RemoteSentinel.Core:Log(string.format("Scan de sistemas de admin completo. Encontrados %d sistemas conhecidos.", found), found > 0 and 2 or 1)
 end
 
 function RemoteSentinel.Scanner:ScanForInsecurePatterns()
@@ -2668,17 +2788,17 @@ function RemoteSentinel.Scanner:ScanForInsecurePatterns()
              if remoteData.instance and remoteData.instance.Parent then
                 if remoteData.instance:IsDescendantOf(LocalPlayer:FindFirstChildOfClass("PlayerGui")) then
                     found = found + 1
-                    self:AddResult(string.format("WARN: Remote found inside PlayerGui: <font color='#%s'>%s</font>", Config.Colors.Info:ToHex(), remoteData.instance:GetFullName()), Config.Colors.Warning)
+                    self:AddResult(string.format("WARN: Remote encontrado dentro da PlayerGui: <font color='#%s'>%s</font>", Config.Colors.Info:ToHex(), remoteData.instance:GetFullName()), Config.Colors.Warning)
                 end
 
                  if remoteData.instance.Parent == Workspace or remoteData.instance.Parent == game:GetService("Lighting") then
                     found = found + 1
-                    self:AddResult(string.format("WARN: Remote found directly in %s: <font color='#%s'>%s</font>", remoteData.instance.Parent.Name, Config.Colors.Info:ToHex(), remoteData.instance:GetFullName()), Config.Colors.Warning)
+                    self:AddResult(string.format("WARN: Remote encontrado diretamente em %s: <font color='#%s'>%s</font>", remoteData.instance.Parent.Name, Config.Colors.Info:ToHex(), remoteData.instance:GetFullName()), Config.Colors.Warning)
                 end
             end
         end
 
-        RemoteSentinel.Core:Log(string.format("Insecure pattern scan complete. Found %d potential issues.", found), found > 0 and 2 or 1)
+        RemoteSentinel.Core:Log(string.format("Scan de padrões inseguros completo. Encontrados %d problemas potenciais.", found), found > 0 and 2 or 1)
     end)
 end
 
@@ -2708,7 +2828,7 @@ function RemoteSentinel.Scanner:ScanForAntiCheat()
                             found = found + 1
                             local path = s:GetFullName()
                             local colorHex = Config.Colors.Info:ToHex()
-                            self:AddResult(string.format("SUSPECT: Pattern `%s` found in <font color='#%s'>%s</font>", pattern, colorHex, path), Config.Colors.Warning, function()
+                            self:AddResult(string.format("SUSPEITO: Padrão `%s` encontrado em <font color='#%s'>%s</font>", pattern, colorHex, path), Config.Colors.Warning, function()
                                 self:ShowSource(s)
                             end)
                             break
@@ -2722,7 +2842,7 @@ function RemoteSentinel.Scanner:ScanForAntiCheat()
             end
         end
 
-        RemoteSentinel.Core:Log(string.format("Anti-cheat scan complete. %d suspicious scripts found.", found), found > 0 and 2 or 1)
+        RemoteSentinel.Core:Log(string.format("Scan de anti-cheat completo. %d scripts suspeitos encontrados.", found), found > 0 and 2 or 1)
         self:AddResult(string.format("<b>-- Varredura Concluída (%d) --</b>", found), Config.Colors.Highlight)
         button.Text = "Scan for Anti-Cheat Patterns"
         button.Selectable = true
@@ -2759,7 +2879,7 @@ function RemoteSentinel.Scanner:MemoryScanForReferences()
                         if upval == remoteInstance then
                             found = found + 1
                             local info = debug.getinfo(f)
-                            self:AddResult(string.format("REF: Encontrada em função em %s:%s", info.short_src or "unknown", info.linedefined or "?"), Config.Colors.Spy)
+                            self:AddResult(string.format("REF: Encontrada em função em %s:%s", info.short_src or "desconhecido", info.linedefined or "?"), Config.Colors.Spy)
                             break
                         end
                     end
@@ -2815,9 +2935,9 @@ function RemoteSentinel.Analyzer:AnalyzeLogic()
         end
     end
 
-    RemoteSentinel.Core:Log("Starting logic analysis...", 0)
-    addResult(string.format("<b>Analyzing logic for: %s</b>", remoteData.instance.Name), Config.Colors.Highlight)
-    addResult(string.format("Baseline success with payload: <font color='#%s'>%s</font>", Config.Colors.Success:ToHex(), RemoteSentinel.Serializer:Serialize(originalPayload)), Config.Colors.Text)
+    RemoteSentinel.Core:Log("Iniciando análise de lógica...", 0)
+    addResult(string.format("<b>Analisando lógica para: %s</b>", remoteData.instance.Name), Config.Colors.Highlight)
+    addResult(string.format("Sucesso base com payload: <font color='#%s'>%s</font>", Config.Colors.Success:ToHex(), RemoteSentinel.Serializer:Serialize(originalPayload)), Config.Colors.Text)
 
     task.spawn(function()
         addResult("\n<b>-- Testando Contagem de Argumentos --</b>", Config.Colors.Highlight)
@@ -2865,6 +2985,139 @@ function RemoteSentinel.Analyzer:AnalyzeLogic()
     end)
 end
 
+RemoteSentinel.Decompiler = {}
+
+function RemoteSentinel.Decompiler:ClearResults()
+    local gui = RemoteSentinel.GUI
+    for _, v in ipairs(gui.DecompilerResultsFrame:GetChildren()) do
+        if v.Name ~= "Layout" then v:Destroy() end
+    end
+    gui.DecompilerResultsFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+    gui.DecompilerSourceLabel.Text = "-- Selecione um script na lista de referências para ver o código aqui."
+    gui.DecompilerSourceViewer.CanvasSize = UDim2.new(0,0,0,gui.DecompilerSourceLabel.AbsoluteSize.Y)
+end
+
+function RemoteSentinel.Decompiler:ShowSource(scriptInstance)
+    local gui = RemoteSentinel.GUI
+    gui.DecompilerSourceLabel.Text = string.format("-- Carregando código de: %s...", scriptInstance:GetFullName())
+    gui.DecompilerSourceViewer.CanvasPosition = Vector2.zero
+
+    task.spawn(function()
+        local success, source = pcall(function() return scriptInstance.Source end)
+        if not success or not source then
+            gui.DecompilerSourceLabel.Text = "<font color='#"..Config.Colors.Error:ToHex().."'>ERRO: Não foi possível ler a propriedade .Source. O acesso pode estar bloqueado.</font>"
+            return
+        end
+
+        local highlightedSource = RemoteSentinel.Scanner.SyntaxHighlighter:Highlight(source)
+        gui.DecompilerSourceLabel.Text = highlightedSource
+        task.wait()
+        gui.DecompilerSourceViewer.CanvasSize = UDim2.new(0, 0, 0, gui.DecompilerSourceLabel.AbsoluteSize.Y + 20)
+    end)
+end
+
+function RemoteSentinel.Decompiler:AddResult(text, color, scriptInstance)
+    local gui = RemoteSentinel.GUI
+    local frame = gui.DecompilerResultsFrame
+    local item = create("TextButton", {
+        Text = text,
+        RichText = true,
+        Font = Enum.Font.Code,
+        TextSize = 12,
+        TextColor3 = color or Config.Colors.TextSecondary,
+        Size = UDim2.new(1, 0, 0, 14),
+        AutomaticSize = Enum.AutomaticSize.Y,
+        BackgroundTransparency = 1,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Parent = frame
+    })
+    create("UICorner", {CornerRadius = UDim.new(0, 6), Parent = item})
+
+    item.MouseEnter:Connect(function() item.BackgroundColor3 = Config.Colors.Accent end)
+    item.MouseLeave:Connect(function() item.BackgroundColor3 = Color3.fromHex("FFFFFF") item.BackgroundTransparency = 1 end)
+
+    item.MouseButton1Click:Connect(function()
+        for _,child in ipairs(frame:GetChildren()) do
+            if child:IsA("TextButton") then
+                child.BackgroundColor3 = Color3.fromHex("FFFFFF")
+                child.BackgroundTransparency = 1
+            end
+        end
+        item.BackgroundTransparency = 0
+        item.BackgroundColor3 = Config.Colors.TabActive
+        self:ShowSource(scriptInstance)
+    end)
+
+    task.wait()
+    if frame and frame.Layout then
+        frame.CanvasSize = UDim2.new(0, 0, 0, frame.Layout.AbsoluteContentSize.Y)
+    end
+end
+
+function RemoteSentinel.Decompiler:FindReferences()
+    if not RemoteSentinel.SelectedInstanceData then
+        return RemoteSentinel.Core:Log("Nenhum remote selecionado para encontrar referências.", 3)
+    end
+    local remoteInstance = RemoteSentinel.SelectedInstanceData.instance
+    local remoteName = remoteInstance.Name
+    local remotePath = remoteInstance:GetFullName()
+
+    self:ClearResults()
+    RemoteSentinel.Core:Log("Iniciando busca por referências para " .. remoteName, 0)
+
+    task.spawn(function()
+        local button = RemoteSentinel.GUI.FindReferencesButton
+        button.Selectable = false
+        button.Text = "Procurando..."
+
+        local foundCount = 0
+        local foundScripts = {}
+
+        for _, s in ipairs(game:GetDescendants()) do
+            if (s:IsA("LocalScript") or s:IsA("ModuleScript")) and not foundScripts[s] then
+                local success, source = pcall(function() return s.Source end)
+                if success and source then
+                    if source:find(remoteName, 1, true) or source:find(remotePath, 1, true) then
+                        foundCount = foundCount + 1
+                        foundScripts[s] = true
+                        self:AddResult(string.format("Estático: %s", s:GetFullName()), Config.Colors.Info, s)
+                    end
+                end
+                if foundCount % 50 == 0 then task.wait() end
+            end
+        end
+
+        if RemoteSentinel.Capabilities.canGetGc then
+             RemoteSentinel.Core:Log("Iniciando busca na memória... (Pode demorar)", 2)
+            local gc = getgc(true)
+            for i, f in ipairs(gc) do
+                if type(f) == "function" and (not RemoteSentinel.Capabilities.canCheckIsC or not is_c_function(f)) then
+                    local success, upvalues = pcall(getupvalues, f)
+                    if success then
+                        for _, upval in ipairs(upvalues) do
+                            if upval == remoteInstance then
+                                local fenv = getfenv(f)
+                                if fenv and fenv.script and not foundScripts[fenv.script] then
+                                    local scriptInstance = fenv.script
+                                    foundCount = foundCount + 1
+                                    foundScripts[scriptInstance] = true
+                                    self:AddResult(string.format("Memória: %s", scriptInstance:GetFullName()), Config.Colors.Spy, scriptInstance)
+                                    break
+                                end
+                            end
+                        end
+                    end
+                    if i % 1000 == 0 then task.wait() end
+                end
+            end
+        end
+
+        RemoteSentinel.Core:Log(string.format("Busca por referências concluída. %d referências encontradas.", foundCount), 1)
+        button.Selectable = true
+        button.Text = "Encontrar Referências ao Remote Selecionado"
+    end)
+end
+
 function RemoteSentinel:Initialize()
     self.Capabilities.canHook = pcall(function() local f = function() end; local nf = hookfunction(f, function() end); unhookfunction(f); return true end)
     self.Capabilities.canGetGc = pcall(getgc)
@@ -2873,14 +3126,16 @@ function RemoteSentinel:Initialize()
 
     self.GUI:Create()
     local mainTab = self.GUI:CreateTab("Main")
+    local decompilerTab = self.GUI:CreateTab("Decompiler")
     local backdoorTab = self.GUI:CreateTab("Backdoor")
     local fuzzerTab = self.GUI:CreateTab("Fuzzer")
     local scannerTab = self.GUI:CreateTab("Scanners")
     local networkTab = self.GUI:CreateTab("Network")
     local recorderTab = self.GUI:CreateTab("Recorder")
-    local advancedTab = self.GUI:CreateTab("Advanced")
+    local advancedTab = self.GUI:CreateTab("Avançado")
 
     self.GUI:SetupMainTab(mainTab)
+    self.GUI:SetupDecompilerTab(decompilerTab)
     self.GUI:SetupBackdoorTab(backdoorTab)
     self.GUI:SetupFuzzerTab(fuzzerTab)
     self.GUI:SetupScannerTab(scannerTab)
@@ -2893,6 +3148,8 @@ function RemoteSentinel:Initialize()
 
     self.GUI.RefreshButton.MouseButton1Click:Connect(function() self.Core:PopulateList(true) end)
     self.GUI.FilterInput:GetPropertyChangedSignal("Text"):Connect(function() self.Core:PopulateList(false) end)
+
+    self.GUI.FindReferencesButton.MouseButton1Click:Connect(function() self.Decompiler:FindReferences() end)
 
     self.GUI.BackdoorScanButton.MouseButton1Click:Connect(function() self.BackdoorRunner:StartScan() end)
     self.GUI.BackdoorExecuteButton.MouseButton1Click:Connect(function() self.BackdoorRunner:StartExecution() end)
@@ -2919,11 +3176,11 @@ function RemoteSentinel:Initialize()
             local state, color = self.Fuzzer[flagName] and "ON" or "OFF", self.Fuzzer[flagName] and Config.Colors.Success or Config.Colors.Warning
             button.Text = logName..": " .. state
             button.TextColor3 = color
-            self.Core:Log(logName.." Analysis está agora " .. state, 2)
+            self.Core:Log("Análise " ..logName.." está agora " .. state, 2)
         end)
     end
-    setupToggle(self.GUI.HeuristicToggle, "HeuristicAnalysis", "Heuristics")
-    setupToggle(self.GUI.AdaptiveToggle, "AdaptiveFuzzing", "Adaptive")
+    setupToggle(self.GUI.HeuristicToggle, "HeuristicAnalysis", "Heurística")
+    setupToggle(self.GUI.AdaptiveToggle, "AdaptiveFuzzing", "Adaptativo")
 
     self.GUI.ScanBackdoorButton.MouseButton1Click:Connect(function() self.Scanner:ScanForBackdoors() end)
     self.GUI.ScanStaticButton.MouseButton1Click:Connect(function() self.Scanner:ScanForStaticPatterns() end)
@@ -2958,7 +3215,7 @@ function RemoteSentinel:Initialize()
 
     if not self.Capabilities.canHook then self.Core:Log("Hooking desativado: `hookfunction` não disponível.", 2) end
     if not self.Capabilities.canGetGc then self.Core:Log("Scan de memória desativado: `getgc` não disponível.", 2) end
-    if not self.Capabilities.canUseHttp then self.Core:Log("HTTP Requester desativado: HttpService não está habilitado neste jogo.", 2) end
+    if not self.Capabilities.canUseHttp then self.Core:Log("Requester HTTP desativado: HttpService não está habilitado neste jogo.", 2) end
 end
 
 local success, err = pcall(function()
@@ -2968,4 +3225,3 @@ end)
 if not success then
     warn("Falha ao inicializar o Remote Sentinel: ", err)
 end
-
