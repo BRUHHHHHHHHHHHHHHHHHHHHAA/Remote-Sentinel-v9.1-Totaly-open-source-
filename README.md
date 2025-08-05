@@ -17,7 +17,7 @@
 ## ⚙️ Requirements
 
 - 🔧 **Required** Executor: **87% to 100% UNC** compatibility
-- ✅ **Tested and validated ONLY with [Ronix](https://ronix.wtf/)**
+- ✅ **Tested and validated ONLY with [Ronix](https://wearedevs.net/d/Ronix)**
 - Required features:
 - `getconnections`, `hookfunction`, `debug.getupvalue`, `getnilinstances`
 - Full support for `CoreGui`, `setclipboard`, `loadstring`, `HttpService.RequestAsync`
